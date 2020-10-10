@@ -1,0 +1,32 @@
+<section class="ftco-section testimony-section ftco-degree-bg">
+    <div class="container">  
+        <div class="row justify-content-center mb-5 pb-5">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <span class="subheading">Customer Reviews</span>
+                <h2>Our satisfied customer says</h2>
+            </div>
+        </div>
+        <div class="row ftco-animate">
+            <div class="col-md-12">
+                <div class="carousel-testimony owl-carousel ftco-owl">
+                    {% for review in customer_reviews %}
+                    <div class="item text-center">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url({{ review.image.url }})">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text">
+                                <p class="mb-5">{{ review.review_quote }}</p>
+                                <p class="name">{{ review.name }}</p>
+                                <span class="position">{{ review.profession }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

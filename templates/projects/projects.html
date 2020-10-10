@@ -1,0 +1,75 @@
+    
+{% extends "common/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load extra_tags %}
+
+{% block active_portfolio %}active{% endblock %}
+
+{% block main_content %}
+<section class="home-slider ftco-degree-bg">
+    <div class="slider-item bread-wrap" style="background-image: url({% static 'common/images/bg/bg_1.jpg' %});" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row slider-text justify-content-center align-items-center">
+          <div class="col-md-10 col-sm-12 ftco-animate mb-4 text-center">
+            <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home' %}">Home</a></span> <span>Portfolio</span></p>
+            <h1 class="mb-3 bread">Projects</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ftco-section ftco-degree-bg">
+    <div class="container">
+      <div class="row no-gutters">
+        {% for project in projects %}
+        <div class="block-3 d-md-flex ftco-animate">
+          <a href="{% url 'project-detail' project.slug %}" class="image {% if forloop.counter|divisibleby:2 %}order-2{% endif %}" style="background-image: url({{ project.image.url }}); "></a>
+          <div class="text">
+            <div style="display: flex; flex-direction: row; justify-content: space-between;">
+              <h4 class="subheading">{{ project.ptype }}</h4>
+              <div class="meta">
+                <div style="margin-top: -0.2rem;"><span class="icon-calendar mr-2"></span>{{ project.dt_project | date:"F Y"}}</div>
+              </div>
+            </div>
+            <h2 class="heading"><a href="{% url 'project-detail' project.slug %}">{{ project.title }}</a></h2>
+            <p>{{ project.detail | truncatechars:225 }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="row mt-5">
+        <div class="col text-center">
+          <div class="block-27" style="text-align: right;">
+            <div class="mb-2">
+              <span class="step-links">
+                  <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+              </span>
+            </div>
+            {% if is_paginated %}         
+              {% if page_obj.has_previous %}
+                  <a class="btn btn-outline-secondary" href="?page=1">First</a>
+                  <a class="btn btn-outline-secondary" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+              {% endif %}              
+              {% for num in page_obj.paginator.page_range %}
+                  {% if page_obj.number == num %}
+                      <a class="btn btn-dark" href="?page={{ num }}">{{ num }}</a>
+                  {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                      <a class="btn btn-outline-dark" href="?page={{ num }}">{{ num }}</a>
+                  {% endif %}
+              {% endfor %}
+              {% if page_obj.has_next %}
+                  <a class="btn btn-outline-secondary" href="?page={{ page_obj.next_page_number }}">Next</a>
+                  <a class="btn btn-outline-secondary" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+</section>
+
+{% endblock %}

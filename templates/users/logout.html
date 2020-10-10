@@ -1,0 +1,18 @@
+    
+{% extends "common/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load extra_tags %}
+
+
+{% block main_content %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    showConfirmationModalCustom('Logged Out', 'You are now logged out.<br/>Return to Home ?', 'Yes', () => {
+        window.location.href = '/';
+    })
+</script>
+{% endblock %}

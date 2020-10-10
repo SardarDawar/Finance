@@ -1,0 +1,94 @@
+    
+{% extends "common/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load extra_tags %}
+
+{% block active_solutions %}active{% endblock %}
+
+{% block main_content %}
+<section class="home-slider ftco-degree-bg">
+    <div class="slider-item bread-wrap" style="background-image: url({% static 'common/images/bg/bg_1.jpg' %});" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row slider-text justify-content-center align-items-center">
+          <div class="col-md-10 col-sm-12 ftco-animate mb-4 text-center">
+            <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home' %}">Home</a></span> <span>Solutions</span></p>
+            <h1 class="mb-3 bread">Services</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="ftco-section ftco-degree-bg">
+    <div class="container">
+
+        {% include 'common/services.html' %}
+        <style>
+          .solution-content p {
+            margin-bottom: 0.7rem;
+          }
+          .solution-content h3 {
+            margin-bottom: 0.7rem;
+          }
+          .solution-content p.p-strong {
+            margin-top: 1.1rem !important;
+          }
+        </style>
+        <div class="row mt-5 solution-content">
+            <div class="col-md-4 ftco-animate">
+              <h3 class="h5"># Startup Financial Modeling</h3>
+              
+              <p>Startup businesses are popping up all over the world. The list is endless. However, as start-ups begin, so do they fail.</p>
+              <p>25% of startups don't survive past year 1, 50% within 5 years, a further 10% fail the following year. Forbes.com quotes 90% of startups fail.</p>
+              <p>One of the key factors in a startup is cash. Understanding the cash burn rate, break-even point and accurately performing cashflow modelling cannot be underestimated.</p>
+              <p class="p-strong"><strong>HOW CAN WE HELP?</strong></p>
+              <p>We have helped a number of startup businesses get a clearer understanding of their cashflow needs. 
+              <p>We are able to perform dynamic and integrated cash flow modelling with rolling actual results as your business operates from month to month.</p>
+              <p>In addition to performing cash flow modelling, we provide accurate valuations of business using a range of recognized valuation techniques including a robust discounted cash flow.</p>
+            </div>
+            <div class="col-md-4 ftco-animate">
+              <h3 class="h5"># Financial Modelling for Accountants</h3>
+            
+              <p>Accountants, bookkeepers, business advisors and the financial services sector in general is facing significant disruption through automation and software.</p>
+              <p>All businesses are looking for more value (at a lower cost) from their finance function or accountant. It is possible to do both with the help of Model Citizn. We provide Financial Modelling training and strategic support to future proof their firms.</p>
+              <p class="p-strong"><strong>HOW CAN WE HELP?</strong></p>
+
+              <p>We can help by transforming your finance operations and reporting into a robust rolling financial model that adds significant value to your client relationships.</p>
+              <p>We can assist by training your staff to operate and roll forward these models including being able to provide high quality business advisory services.</p>
+              <p>We already help a number of accounting firms which to date have managed to lower the risk of disruption by offshoring core tax and compliance tasks thereby reducing costs.</p>
+            
+            </div>
+            <div class="col-md-4 ftco-animate">
+            <h3 class="h5"># Corporate Financial Modeling</h3>
+
+            <p>With the arrival of the 4th Industrial revolution comprising disruptive technologies and automation large Corporates and NGOs are struggling to find additional efficiencies in their finance function whilst wanting to still increase value.</p>
+            <p>It is possible to reduce costs whilst simulateously increasing the value that the team provides to the organisation.</p>
+            <p class="p-strong"><strong>HOW CAN WE HELP?</strong></p>
+            
+            <p>We have helped clients automate their monthly reporting process by combining their actual and forecast information into a dynamic model which they can use to make relevant, informed and purposeful decisions with insight.</p>
+
+            <p>We provide training to staff as well as a detailed operating manual of how the model works to enable them to be self sufficient and sustainable.</p>
+              
+            <p>In one case we reduced some of the efforts of the organisation from 3 days a week to 3 days a month and thereby provide capacity and cost relief.</p>
+          </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="ftco-section pt-0" style="margin-top: -1rem;">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-10 text-center ftco-animate">
+        <p>
+            <a href="{% url 'contact' %}" class="btn btn-primary py-3 px-5 mr-3">Get in touch</a>
+            <a href="{% url 'schedule-meeting' %}" class="btn btn-primary btn-primary py-3 px-5">Schedule a meeting</a> 
+        </p>       
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

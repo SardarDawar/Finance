@@ -1,0 +1,35 @@
+{% load static %}
+<li class="comment" id="comment-body-{{comment.id}}">
+    <div class="vcard bio">
+        {% if comment.user %}
+        <img src="{{ comment.user.profile.image.url }}" alt="Image placeholder">
+        {% else %}
+        <img src="{% static 'common/images/user.png' %}" alt="Image placeholder">
+        {% endif %}
+    </div>                     
+    
+    
+
+    <div class="comment-body">
+        <h3>
+            {{ comment.name }}     
+            {% if request.user.is_authenticated %}
+            <a class="btn btn-outline-danger float-right my-icon-button" onclick="deleteComment({{comment.id}});"><span class="icon-trash"></span></a>
+            {% endif %}           
+        </h3>
+        <div class="meta">{{ comment.dt_creation|date:"F j, Y" }} at {{ comment.dt_creation|date:"P" }}</div>
+        <p>{{ comment.content }}</p>
+        <p><a class="reply" id="reply-button-{{ comment.id }}" style="cursor: pointer;" onclick="toggleReplyForm({{ comment.id }})">Reply</a></p>
+    </div>
+
+    <span class="children pt-0" id="reply-form-{{ comment.id }}"></span>
+
+    {% if comment.replies.all %}
+    <ul class="children pt-3" id="comment-reply-list-{{comment.id}}">
+        {% for reply in comment.replies.all %}
+            {% include 'blogs/reply.html' %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+</li>

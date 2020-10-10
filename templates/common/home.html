@@ -1,0 +1,185 @@
+    
+{% extends "common/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load extra_tags %}
+
+{% block active_home %}active{% endblock %}
+
+{% block main_content %}
+
+<section class="home-slider ftco-degree-bg">
+    <div class="slider-item">
+        <div class="overlay"></div>
+        <div class="container">
+        <div class="row slider-text align-items-center justify-content-center">
+            <div class="col-md-10 ftco-animate text-center">
+            <h1 class="mb-4">We help you
+                <strong class="typewrite" data-period="4000" data-type='[ "Excel.", "Develop.", "Improve.", "Succeed." ]'>
+                <span class="wrap"></span>
+                </strong>
+            </h1>
+            <p>{{ basic_info_company_about_dash }}</p>
+            <p><a href="{{ home_video_url }}" class="btn btn-primary btn-outline-white px-4 py-3 popup-vimeo"><span class="ion-ios-play mr-2"></span> Watch Video</a></p>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+<!-- END slider -->
+
+<section class="ftco-section-featured ftco-animate">
+    <div class="container">
+        <div class="row">
+        <div class="col-md-12">
+            <div class="carousel owl-carousel">
+                {% for dashimg in dashboard_images %}
+                <div class="item">
+                    <a href="{% url 'solutions' %}">
+                    <img src="{{ dashimg.image.url }}" class="img-fluid" alt="">
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- services -->
+<section class="ftco-section ftco-degree-bg">
+    <div class="container">
+        {% include 'common/services.html' %}
+    </div>
+</section>
+
+<section class="ftco-section-parallax ftco-degree-bg">
+    <div class="parallax-img d-flex align-items-center">
+        <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10 text-center heading-section heading-section-white ftco-animate">
+            <h2 class="h1 font-weight-bold">Turn every channel into a revenue channel and drive business growth</h2>
+            <p>
+                <a href="{% url 'solutions' %}" class="btn btn-primary btn-outline-white mt-3 py-3 px-4">View more details</a>
+                <a href="{% url 'schedule-meeting' %}" class="btn btn-primary btn-outline-white mt-3 ml-3 py-3 px-4">Schedule meeting</a>
+            </p>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recent Projects -->
+<section class="ftco-section">
+    <div class="container-fluid">
+        <div class="row no-gutters justify-content-center mb-5 pb-5">
+        <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">Works</span>
+            <h2><a href="{% url 'projects' %}" style="color:inherit">Recent Works</a></h2>
+        </div>
+        </div>
+        <div class="row no-gutters">
+            {% for project in latest_projects %}
+            <div class="block-3 d-md-flex ftco-animate">
+                <a href="{% url 'project-detail' project.slug %}" class="image {% if forloop.counter|divisibleby:2 %}order-2{% endif %}" style="background-image: url({{ project.image.url }}); "></a>
+                <div class="text">
+                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                      <h4 class="subheading">{{ project.ptype }}</h4>
+                      <div class="meta">
+                        <div style="margin-top: -0.2rem;"><span class="icon-calendar mr-2"></span>{{ project.dt_project | date:"F Y"}}</div>
+                      </div>
+                    </div>
+                    <h2 class="heading"><a href="{% url 'project-detail' project.slug %}">{{ project.title }}</a></h2>
+                    <p>{{ project.detail | truncatechars:225 }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- user reviews -->
+{% include 'common/reviews.html' %}
+
+<!-- achievements -->
+{% include 'common/achievements.html' %}
+
+<!-- recent blogs -->
+<section class="ftco-section ftco-degree-bg">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-5">
+        <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">Blog</span>
+            <h2><a href="{% url 'blogs' %}" style="color:inherit">Recent Blogs</a></h2>
+        </div>
+        </div>
+        <div class="row">
+            {% for blog in latest_blogs %}
+            <div class="col-md-4 ftco-animate">
+              <div class="blog-entry">
+                <a href="{% url 'blog-detail' blog.slug %}" class="block-20" style="background-image: url({{ blog.image.url }});">
+                </a>
+                <div class="text p-4 d-block">
+                  <div class="meta mb-3">
+                    <div>{{ blog.dt_creation | date:"M j, Y"}}</div>
+                    {% if blog.author %}
+                    <div>
+                        {% if blog.author.first_name or blog.author.last_name %}
+                            {% if blog.author.first_name %}{{ blog.author.first_name }}{% endif %}
+                            {% if blog.author.last_name %}{{ blog.author.last_name }}{% endif %}
+                        {% else %}
+                            {{ blog.author.username }}
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    <div class="meta-chat float-right"><span class="icon-chat"></span> {{ blog.comments.count|cool_number }}</div>
+                  </div>
+                  <h3 class="heading"><a href="{% url 'blog-detail' blog.slug %}">{{ blog.title }}</a></h3>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- latest news -->
+<section class="ftco-section ftco-degree-bg pt-0">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-5">
+        <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">News</span>
+            <h2><a href="{% url 'news' %}" style="color:inherit">Latest News</a></h2>
+        </div>
+        </div>
+        <div class="row">
+            {% for article in latest_news_articles %}
+            <div class="col-md-4 ftco-animate">
+              <div class="blog-entry">
+                <a href="{% url 'news-detail' article.slug %}" class="block-20" style="background-image: url({{ article.image.url }});">
+                </a>
+                <div class="text p-4 d-block">
+                  <div class="meta mb-3">
+                    <div>{{ article.dt_creation | date:"M j, Y"}}</div>
+                    {% if article.author %}
+                    <div class="float-right">
+                        {% if article.author.first_name or article.author.last_name %}
+                            {% if article.author.first_name %}{{ article.author.first_name }}{% endif %}
+                            {% if article.author.last_name %}{{ article.author.last_name }}{% endif %}
+                        {% else %}
+                            {{ article.author.username }}
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                  </div>
+                  <h3 class="heading"><a href="{% url 'news-detail' article.slug %}">{{ article.title }}</a></h3>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

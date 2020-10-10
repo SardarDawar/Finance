@@ -1,0 +1,102 @@
+    
+{% extends "common/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load extra_tags %}
+
+{% block active_portfolio %}active{% endblock %}
+
+{% block main_content %}
+
+    <section class="home-slider ftco-degree-bg">
+      <div class="slider-item bread-wrap" style="background-image: url({% static 'common/images/bg/bg_1.jpg' %});" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+          <div class="row slider-text justify-content-center align-items-center">
+            <div class="col-md-10 col-sm-12 ftco-animate mb-4 text-center">
+              <p class="breadcrumbs">
+                  <span class="mr-2"><a href="{% url 'home' %}">Home</a></span> 
+                  <span class="mr-2"><a href="{% url 'projects' %}">Projects</a></span> 
+                  <span>{{ project.ptype }}</span>
+            </p>
+              <h1 class="mb-3">{{ project.title }}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ftco-section ftco-degree-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 ftco-animate">
+            
+
+            <p>
+              <img src="{{ project.image.url }}" alt="" class="img-fluid">
+            </p>
+            <h2 class="mb-3">{{ project.title }}</h2>
+
+            <div class="block-21 mb-4 d-flex">
+                <div class="text">
+                  <div class="meta">
+                    <div><span class="icon-calendar mr-2"></span>{{ project.dt_project | date:"F Y"}}</div>
+                  </div>
+                </div>
+            </div>
+
+            <p>{{ project.detail | linebreaks }}</p>     
+            
+            <p style="margin-top: 2rem;">
+                {% if project.demo_url %}<a href="{{ project.demo_url }}" target="_blank" class="btn btn-primary py-3 px-5 mr-3">See Demo</a> {% endif %}
+                {% if project.download_file %}<a href="{{ project.download_file.url }}" class="btn btn-primary btn-outline-primary py-3 px-5">Download</a> {% endif %}
+            </p>
+            
+        </div>
+        
+        <!-- sidebar -->
+        <div class="col-md-4 sidebar ftco-animate">
+
+            <div class="sidebar-box ftco-animate">
+              <h3 class="mb-4">Latest Projects</h3>
+
+              {% for proj in latest_projects %}
+              <div class="block-21 mb-4 d-flex">
+                <a class="blog-img mr-4" style="background-image: url({{ proj.image.url }});"></a>
+                <div class="text">
+                  <h3 class="heading mb-2"><a href="{% url 'project-detail' proj.slug %}">{{ proj.title }}</a></h3>
+                  <div class="meta">
+                    <div><span class="icon-calendar mr-2"></span>{{ proj.dt_project | date:"F Y"}}</div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+
+            </div>
+
+            <div class="sidebar-box ftco-animate">
+              <h3>Navigate</h3>
+              <div class="tagcloud">
+                <a href="{% url 'home' %}" class="tag-cloud-link">Home</a>
+                <a href="{% url 'projects' %}" class="tag-cloud-link">Projects</a>
+                <a href="{% url 'blogs' %}" class="tag-cloud-link">Blog</a>
+                <a href="{% url 'news' %}" class="tag-cloud-link">News</a>
+                <a href="{% url 'about' %}" class="tag-cloud-link">About Us</a>
+                <a href="{% url 'solutions' %}" class="tag-cloud-link">Services</a>
+                <a href="{% url 'contact' %}" class="tag-cloud-link">Get in Touch</a>
+              </div>
+            </div>
+
+            <div class="sidebar-box ftco-animate">
+              <h3>Thiago Wehbe</h3>
+              <p>This is sample content, included with the template to illustrate its features. Remove or replace it with your own words and media.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+
+{% endblock %}

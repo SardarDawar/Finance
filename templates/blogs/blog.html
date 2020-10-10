@@ -1,0 +1,146 @@
+    
+{% extends "common/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load extra_tags %}
+
+{% block active_blogs %}active{% endblock %}
+
+{% block main_content %}
+
+    <section class="home-slider ftco-degree-bg">
+        <div class="slider-item bread-wrap" style="background-image: url({% static 'common/images/bg/bg_1.jpg' %});" data-stellar-background-ratio="0.5">
+          <div class="overlay"></div>
+          <div class="container">
+            <div class="row slider-text justify-content-center align-items-center">
+              <div class="col-md-10 col-sm-12 ftco-animate mb-4 text-center">
+                <p class="breadcrumbs">
+                    <span class="mr-2"><a href="{% url 'home' %}">Home</a></span> 
+                    <span class="mr-2"><a href="{% url 'blogs' %}">Blogs</a></span> 
+                    <!-- <span>Single Blog</span> -->
+                </p>
+                <h1 class="mb-3">{{ blog.title }}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <section class="ftco-section ftco-degree-bg">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-md-8 ftco-animate">
+
+            <p>
+              <img src="{{ blog.image.url }}" alt="" class="img-fluid">
+            </p>
+            <h2 class="mb-3">{{ blog.title }}</h2>
+
+            <div class="block-21 mb-4 d-flex">
+                <div class="text">
+                  <div class="meta">
+                    <div><span class="icon-calendar mr-2"></span>{{ blog.dt_creation | date:"l jS F, Y"}}</div>
+                  </div>
+                </div>
+            </div>
+
+            <p>{{ blog.content | linebreaks }}</p>     
+            
+            <div class="tag-widget post-tag-container mb-5 mt-5">
+                <div class="tagcloud">
+                  <a href="{% url 'blogs' %}" class="tag-cloud-link">More Blogs</a>
+                  <a href="{% url 'news' %}" class="tag-cloud-link">News</a>
+                  <a href="{% url 'home' %}" class="tag-cloud-link">Home</a>
+                  <a href="{% url 'contact' %}" class="tag-cloud-link">Contact Us</a>
+                </div>
+            </div>
+
+            {% if blog.author %}
+            <div class="about-author d-flex p-5 bg-light">
+                <div class="bio align-self-md-center mr-5">
+                  <img src="{{ blog.author.profile.image.url }}" alt="Image placeholder" class="img-fluid mb-4" style="max-width: 100px;">
+                </div>
+                <div class="desc align-self-md-center">
+                    {% if blog.author.first_name or blog.author.last_name %}
+                    <h3>
+                        {% if blog.author.first_name %}{{ blog.author.first_name }}{% endif %}
+                        {% if blog.author.last_name %}{{ blog.author.last_name }}{% endif %}
+                    </h3>
+                    {% else %}
+                    <h3>{{ blog.author.username }}</h3>
+                    {% endif %}
+
+                    {% if blog.author.profile.about %}
+                    <p>{{ blog.author.profile.about }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}     
+            
+            {% include 'blogs/comments.html' %}
+        </div>
+        
+        
+        <!-- sidebar -->
+        <div class="col-md-4 sidebar ftco-animate">
+
+            <div class="sidebar-box ftco-animate">
+              <h3 class="mb-4">Recent Blogs</h3>
+
+              {% for blg in latest_blogs %}
+              <div class="block-21 mb-4 d-flex">
+                <a class="blog-img mr-4" style="background-image: url({{ blg.image.url }});"></a>
+                <div class="text">
+                  <h3 class="heading mb-2"><a href="{% url 'blog-detail' blg.slug %}">{{ blg.title }}</a></h3>
+                  <div class="meta">
+                    <div><span class="icon-calendar mr-2"></span>{{ blg.dt_creation | date:"j M Y"}}</div>
+                    {% if blg.author %}
+                    <div><span class="icon-person"></span>
+                        {% if blg.author.first_name or blg.author.last_name %}
+                            {% if blg.author.first_name %}{{ blg.author.first_name }}{% endif %}
+                            {% if blg.author.last_name %}{{ blg.author.last_name }}{% endif %}
+                        {% else %}
+                            {{ blg.author.username }}
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    <div><span class="icon-chat"></span> {{ blg.comments.count|cool_number }}</div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+
+            </div>
+
+            <div class="sidebar-box ftco-animate">
+              <h3>Navigate</h3>
+              <div class="tagcloud">
+                <a href="{% url 'home' %}" class="tag-cloud-link">Home</a>
+                <a href="{% url 'projects' %}" class="tag-cloud-link">Projects</a>
+                <a href="{% url 'blogs' %}" class="tag-cloud-link">Blog</a>
+                <a href="{% url 'news' %}" class="tag-cloud-link">News</a>
+                <a href="{% url 'about' %}" class="tag-cloud-link">About Us</a>
+                <a href="{% url 'solutions' %}" class="tag-cloud-link">Services</a>
+                <a href="{% url 'contact' %}" class="tag-cloud-link">Get in Touch</a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script type="text/javascript">
+    // define blog variables
+    var blog_id = '{{ blog.id }}'
+  </script>
+<script src="{% static 'blogs/js/comments.js' %}"></script>
+{% endblock %}

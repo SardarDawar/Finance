@@ -1,0 +1,88 @@
+    
+{% extends "common/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load extra_tags %}
+
+{% block active_blogs %}active{% endblock %}
+
+{% block main_content %}
+
+  <section class="home-slider ftco-degree-bg">
+    <div class="slider-item bread-wrap" style="background-image: url({% static 'common/images/bg/bg_1.jpg' %});" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row slider-text justify-content-center align-items-center">
+          <div class="col-md-10 col-sm-12 ftco-animate mb-4 text-center">
+            <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home' %}">Home</a></span> <span>Blogs</span></p>
+            <h1 class="mb-3 bread">Read our blogs</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ftco-section ftco-degree-bg">
+    <div class="container">
+      <div class="row">
+        {% for blog in blogs %}
+        <div class="col-md-4 ftco-animate">
+          <div class="blog-entry">
+            <a href="{% url 'blog-detail' blog.slug %}" class="block-20" style="background-image: url({{ blog.image.url }});">
+            </a>
+            <div class="text p-4 d-block">
+              <div class="meta mb-3">
+                <div>{{ blog.dt_creation | date:"M j, Y"}}</div>
+                {% if blog.author %}
+                <div>
+                    {% if blog.author.first_name or blog.author.last_name %}
+                        {% if blog.author.first_name %}{{ blog.author.first_name }}{% endif %}
+                        {% if blog.author.last_name %}{{ blog.author.last_name }}{% endif %}
+                    {% else %}
+                        {{ blog.author.username }}
+                    {% endif %}
+                </div>
+                {% endif %}
+                <div class="meta-chat float-right"><span class="icon-chat"></span> {{ blog.comments.count|cool_number }}</div>
+              </div>
+              <h3 class="heading"><a href="{% url 'blog-detail' blog.slug %}">{{ blog.title }}</a></h3>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="row mt-4">
+        <div class="col text-center">
+          <div class="block-27" style="text-align: right;">
+            <div class="mb-2">
+              <span class="step-links">
+                  <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+              </span>
+            </div>
+            {% if is_paginated %}         
+              {% if page_obj.has_previous %}
+                  <a class="btn btn-outline-secondary" href="?page=1">First</a>
+                  <a class="btn btn-outline-secondary" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+              {% endif %}              
+              {% for num in page_obj.paginator.page_range %}
+                  {% if page_obj.number == num %}
+                      <a class="btn btn-dark" href="?page={{ num }}">{{ num }}</a>
+                  {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                      <a class="btn btn-outline-dark" href="?page={{ num }}">{{ num }}</a>
+                  {% endif %}
+              {% endfor %}
+              {% if page_obj.has_next %}
+                  <a class="btn btn-outline-secondary" href="?page={{ page_obj.next_page_number }}">Next</a>
+                  <a class="btn btn-outline-secondary" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% load static %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<link rel="stylesheet" href="{% static 'common/css/icomoon.css' %}">
+<link rel="stylesheet" href="{% static 'common/css/style.css' %}">
+
+<a class="ml-5 mt-3 btn btn-outline-dark my-icon-button" style="position: absolute; top:0; z-index: 5;" href="{% url 'home' %}"><span class="icon-arrow-left"></span></a>
+
+<!-- Calendly inline widget begin -->
+<div class="calendly-inline-widget" data-url="https://calendly.com/financerhub" style="min-width:320px;height:630px;"></div>
+<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+<!-- Calendly inline widget end -->

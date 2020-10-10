@@ -1,0 +1,7 @@
+.my-icon-button:hover span{
+    color: white;
+}
+
+.icon-trash:not(.dark) {
+    color: #DC3646;
+}

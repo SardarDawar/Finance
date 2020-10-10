@@ -1,0 +1,87 @@
+{% extends "common/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load extra_tags %}
+
+{% block active_contact %}active{% endblock %}
+
+{% block main_content %}
+    
+<section class="home-slider ftco-degree-bg">
+    <div class="slider-item bread-wrap" style="background-image: url({% static 'common/images/bg/bg_1.jpg' %});" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row slider-text justify-content-center align-items-center">
+          <div class="col-md-10 col-sm-12 ftco-animate mb-4 text-center">
+            <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home' %}">Home</a></span> <span>Contact</span></p>
+            <h1 class="mb-3 bread">Contact Us</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ftco-section contact-section ftco-degree-bg">
+    <div class="container bg-light">
+      <div class="row d-flex mb-5 contact-info">
+        <div class="col-md-12 mb-4">
+          <h2 class="h4">Contact Information</h2>
+        </div>
+        <div class="w-100"></div>
+        <div class="col-md-3">
+          <p><span>Address:</span> {{ basic_info_contact_address }}</p>
+        </div>
+        <div class="col-md-3">
+          <p><span>Phone:</span> <a href="tel://{{ basic_info_contact_telephone }}">{{ basic_info_contact_telephone }}</a></p>
+        </div>
+        <div class="col-md-3">
+          <p><span>Email:</span> <a href="mailto:{{ basic_info_contact_email }}">{{ basic_info_contact_email }}</a></p>
+        </div>
+        <div class="col-md-3">
+          <p><span>Website</span> <a href="http://{{ domain }}">{{ domain }}</a></p>
+          <a href="{% url 'schedule-meeting' %}" class="btn btn-primary btn-primary py-2 px-4" style="color: default;">Schedule a meeting</a> 
+        </div>
+      </div>
+      <div class="row block-9">
+        <div class="{% if google_maps_api_key %}col-md-6{% else %}col-md-8{% endif %} pr-md-5">
+          <form>
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="text" maxlength="50" class="form-control" placeholder="Your Name" id="contact-name">
+            </div>
+            <div class="form-group">
+              <input type="text" maxlength="100" class="form-control" placeholder="Your Email" id="contact-email">
+            </div>
+            <div class="form-group">
+              <input type="text" maxlength="150" class="form-control" placeholder="Subject" id="contact-subject">
+            </div>
+            <div class="form-group">
+              <textarea name="" maxlength="5000" id="contact-message" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+            </div>
+            <div class="form-group">
+              <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5" onclick="sendContactMessage(event)">
+            </div>
+          </form>
+        
+        </div>
+
+        {% if google_maps_api_key %}<div class="col-md-6" id="map"></div>{% endif %}
+      </div>
+    </div>
+  </section>
+ 
+  <section class="ftco-section pt-0" style="margin-top: -1rem;">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-10 text-center ftco-animate">
+    
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'common/js/contact.js' %}"></script>
+{% endblock %}

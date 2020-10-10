@@ -1,0 +1,21 @@
+{% load static %}
+
+<li class="comment mb-1" id="reply-body-{{reply.id}}">
+    <div class="vcard bio">
+        {% if reply.user %}
+        <img src="{{ reply.user.profile.image.url }}" alt="Image placeholder">
+        {% else %}
+        <img src="{% static 'common/images/user.png' %}" alt="Image placeholder">
+        {% endif %}    
+    </div>
+    <div class="comment-body">
+        <h3>
+            {{ reply.name }}     
+            {% if request.user.is_authenticated %}
+            <a class="btn btn-outline-dark float-right my-icon-button" onclick="deleteReply({{reply.id}});"><span class="icon-trash dark"></span></a>
+            {% endif %}           
+        </h3>
+        <div class="meta">{{ reply.dt_creation|date:"F j, Y" }} at {{ reply.dt_creation|date:"P" }}</div>
+        <p>{{ reply.content }}</p>
+    </div>
+</li>

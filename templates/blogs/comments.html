@@ -1,0 +1,61 @@
+{% load extra_tags %}
+
+<div class="pt-5 mt-5">
+    <h3 class="mb-5">{{ blog.comments.count|cool_number }} Comments</h3>
+    <ul class="comment-list" id="blog-comment-list">
+
+        {% for comment in blog.comments.all %}
+            {% include 'blogs/comment.html' %}
+        {% endfor %}
+    </ul>
+    <!-- END comment-list -->
+
+    {% if request.user.is_authenticated %}
+    <div class="comment-form-wrap pt-5">
+        <h3 class="mb-0">Add comment</h3>
+        <form class="p-5 bg-light">
+            {% csrf_token %}
+        <div class="form-group">
+            <label for="post-comment-content">Comment</label>
+            <textarea maxlength="500" name="" cols="30" rows="10" class="form-control" id="post-comment-content"></textarea>
+          </div>
+          <div class="form-group">
+            <input value="Post Comment" type="submit" class="btn py-3 px-4 btn-primary" id="post-comment-button">
+          </div>
+
+        </form>
+    </div>    
+    {% else %}
+    <div class="comment-form-wrap pt-5">
+        <h3 class="mb-0">Leave a comment</h3>
+        <form action="#" class="p-5 bg-light">
+            {% csrf_token %}
+          <div class="form-group">
+            <label for="post-comment-name">Name *</label>
+            <input maxlength="50" type="text" class="form-control" id="post-comment-name">
+          </div>
+          <div class="form-group">
+            <label for="post-comment-email">Email *</label>
+            <input maxlength="50" type="email" class="form-control" id="post-comment-email">
+          </div>
+          <div class="form-group">
+            <label for="post-comment-website">Website</label>
+            <input maxlength="50" type="url" class="form-control" id="post-comment-website">
+          </div>
+
+          <div class="form-group">
+            <label for="post-comment-content">Comment</label>
+            <textarea maxlength="500" name="" id="post-comment-content" cols="30" rows="10" class="form-control"></textarea>
+          </div>
+          <div class="form-group">
+            <input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary" id="post-comment-button">
+          </div>
+
+        </form>
+    </div>
+    {% endif %}
+
+</div>
+
+
+  
